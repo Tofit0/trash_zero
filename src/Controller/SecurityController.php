@@ -11,6 +11,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
+use App\Form\UserSignUpType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Controller used to manage the application security.
@@ -66,4 +69,45 @@ class SecurityController extends AbstractController
     {
         throw new \Exception('This should never be reached!');
     }
+
+
+    /**
+     * Signing up form
+     *
+     * @Route("/signup", methods="GET|POST", name="user_signup")
+     */
+    public function signup(Request $request, Security $security, UserPasswordEncoderInterface $encoder): Response
+    {
+        // if user is already logged in, don't display the signing page again
+        if ($security->isGranted('ROLE_USER')) {
+            return $this->redirectToRoute('blog_index');
+        }
+
+        $user = new User();
+
+        $form = $this->createForm(UserSignUpType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            //giving default ROLE
+            $user->setRoles($user->getRoles());
+            //Encoding password
+            $user->setPassword($encoder->encodePassword($user, $form->get('password')->getData()));
+
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('success', 'user.created_successfully');
+
+            return $this->redirectToRoute('security_login');
+        }
+
+        return $this->render('user/signup.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+
 }
