@@ -162,6 +162,27 @@
                 <source>label.save_and_create_new</source>
                 <target>Save and create new</target>
             </trans-unit>
+            <!--TODO add to all-->
+            <trans-unit id="label.file">
+                <source>label.file</source>
+                <target>File</target>
+            </trans-unit>
+            <!--TODO add to all-->
+            <trans-unit id="label.image">
+                <source>label.image</source>
+                <target>Image</target>
+            </trans-unit>
+            <!--TODO add to all-->
+            <trans-unit id="label.delete.image">
+                <source>label.delete.image</source>
+                <target>Delete image</target>
+            </trans-unit>
+            <!--TODO add to all-->
+            <trans-unit id="label.download.image">
+                <source>label.download.image</source>
+                <target>Download image</target>
+            </trans-unit>
+
             <trans-unit id="action.back_to_list">
                 <source>action.back_to_list</source>
                 <target>Back to the post list</target>
@@ -441,6 +462,11 @@
               <source>help.welcome</source>
               <target>We are happy that you decided to join this community, you are very welcome!</target>
             </trans-unit>
+            <!--TODO add in all-->
+            <trans-unit id="help.image_content">
+                <source>help.image_content</source>
+                <target>Images not complying with our Code of Conduct will be moderated.</target>
+            </trans-unit>
 
             <trans-unit id="info.change_password">
                 <source>info.change_password</source>
@@ -468,7 +494,7 @@
                 <source>paginator.current</source>
                 <target>(current)</target>
             </trans-unit>
-            <!--TODO add to all-->
+            <!--TODO add to all all bellow -->
             <trans-unit id="error_msg.image.error_format">
               <source>error_msg.image.error_format</source>
               <target>You can only be allowed to upload Image file or PDF file</target>
