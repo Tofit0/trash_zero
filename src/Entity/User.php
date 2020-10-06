@@ -27,6 +27,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @author Ryan Weaver <weaverryan@gmail.com>
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
+ *
+ * Modified by
+ * @author Christophe Mathiou <christophe.mathiou@gmail.com>
  */
 class User implements UserInterface, \Serializable
 {
@@ -77,6 +80,16 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     * @Assert\Valid()
+     *
+     * TODO : https://github.com/dustin10/VichUploaderBundle/blob/master/docs/known_issues.md check the cascade!!
+     */
+    private $image;
+
+
 
     public function getId(): ?int
     {
@@ -184,5 +197,17 @@ class User implements UserInterface, \Serializable
     {
         // add $this->salt too if you don't use Bcrypt or Argon2i
         [$this->id, $this->username, $this->password] = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): self
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }

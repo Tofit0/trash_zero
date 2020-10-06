@@ -48,8 +48,7 @@ class UserSignUpType extends AbstractType
             ->add('email', EmailType::class, [
                 'label' => 'label.email',
             ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
+            ->add('password', PasswordType::class, [
                 'constraints' => [
                     new NotBlank(),
                     new Length([
@@ -57,12 +56,28 @@ class UserSignUpType extends AbstractType
                         'max' => 128,
                     ]),
                 ],
-                'first_options' => [
-                    'label' => 'label.password',
-                ],
-                'second_options' => [
-                    'label' => 'label.password_confirm',
-                ],
+                'label' => 'label.password',
+            ])
+            /**
+             * TODO un-comment for prod and comment above
+             */
+//            ->add('password', RepeatedType::class, [
+//                'type' => PasswordType::class,
+//                'constraints' => [
+//                    new NotBlank(),
+//                    new Length([
+//                        'min' => 5,
+//                        'max' => 128,
+//                    ]),
+//                ],
+//                'first_options' => [
+//                    'label' => 'label.password',
+//                ],
+//                'second_options' => [
+//                    'label' => 'label.password_confirm',
+//                ],
+//            ])
+            ->add('image', ImageType::class, [
             ])
         ;
     }
